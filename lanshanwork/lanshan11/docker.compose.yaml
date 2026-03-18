@@ -1,0 +1,48 @@
+version: '3.8'
+
+networks:
+  demo:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-1
+    ports:
+      - "3306:3306"
+    environment:
+      - TZ=${TZ}
+      - MYSQL_PASSWORD=Qsx20061212             # 设置 Mysql 用户密码
+      - MYSQL_ROOT_PASSWORD=Qsx20061212    # 设置 Mysql root 用户密码
+    restart: always
+    volumes:
+      - ${DATA_PATH_HOST}/mysql:/var/lib/mysql
+    networks:
+      - demo
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    container_name: redis2-1
+    restart: always
+    volumes:
+      - ${DATA_PATH_HOST}/redis2:/data
+    networks:
+      - demo
+
+  etcd:
+    image: bitnami/etcd:latest
+    container_name: etcd-1
+    environment:
+      - TZ=${TZ}
+      - ALLOW_NONE_AUTHENTICATION=yes
+      #- ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://127.0.0.1:2379
+    ports: # 设置端口映射 Etcd 服务映射宿主机端口号，可在宿主机127.0.0.1:2379访问
+      - "2379:2379"
+      #networks:
+      #- backend
+    restart: always
+    networks:
+      - demo

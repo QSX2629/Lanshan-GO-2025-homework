@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./userclient";
+
+// 注册请求
+message RegisterReq {
+  string Username = 1;
+  string Password = 2;
+}
+
+// 注册响应
+message RegisterResp {
+  int32 Code = 1;
+  string Msg = 2;
+  int64 UserId = 3; // 可选，返回用户ID
+}
+
+// 登录请求
+message LoginReq {
+  string Username = 1;
+  string Password = 2;
+}
+
+// 登录响应
+message LoginResp {
+  int32 Code = 1;
+  string Msg = 2;
+  int64 UserId = 3; // 可选，返回用户ID
+  string Token = 4; // 可选，返回登录Token
+}
+
+// User RPC服务定义
+service User {
+  rpc Register(RegisterReq) returns (RegisterResp);
+  rpc Login(LoginReq) returns (LoginResp);
+}

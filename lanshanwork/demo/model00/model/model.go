@@ -8,10 +8,10 @@ import (
 // Member 会员模型（数据库表映射）
 type Member struct {
 	gorm.Model
-	Account   string `gorm:"not null;unique;comment:账号"`
-	Password  string `gorm:"not null;comment:密码（加密后存储）"`
-	Major     string `gorm:"not null;comment:专业"`
-	Character string `gorm:"not null;comment:"角色""`
+	Account   string `gorm2:"not null;unique;comment:账号"`
+	Password  string `gorm2:"not null;comment:密码（加密后存储）"`
+	Major     string `gorm2:"not null;comment:专业"`
+	Character string `gorm2:"not null;comment:"角色""`
 }
 
 // BeforeCreate 创建前加密密码

@@ -297,8 +297,9 @@ func UnlockUser(c *gin.Context) {
 }
 
 type CommentRequest struct {
-	ArticleID uint   `json:"article_id" `
-	Content   string `json:"content" binding:"required"`
+	ArticleID uint `json:"article_id" `
+
+	Content string `json:"content" binding:"required"`
 }
 
 func CreateComment(c *gin.Context) {
