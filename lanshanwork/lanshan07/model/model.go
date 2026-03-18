@@ -7,9 +7,9 @@ import (
 
 // Member 定义会员数据模型
 type Member struct {
-	Account  string `gorm:"not null;unique;comment:"账号""`
-	Password string `gorm:"not null;min:6;max:10;comment:"密码""`
-	Major    string `gorm:"not null;comment:专业"`
+	Account  string `gorm2:"not null;unique;comment:"账号""`
+	Password string `gorm2:"not null;min:6;max:10;comment:"密码""`
+	Major    string `gorm2:"not null;comment:专业"`
 }
 
 // BeforeCreate ////////////////*****************构建数据模型********************/////////////////////

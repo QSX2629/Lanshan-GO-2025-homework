@@ -5,7 +5,6 @@ import (
 	"hanjia_demo/model"
 )
 
-// ====================== 用户相关数据库操作 ======================
 // CheckUserExists 检查用户名是否存在
 func CheckUserExists(username string) (bool, error) {
 	var user model.User
@@ -51,7 +50,6 @@ func UpdateUserStatus(userID uint, adminUser bool) error {
 	return result.Error
 }
 
-// ====================== 文章相关数据库操作 ======================
 // CreateArticle 创建文章
 func CreateArticle(article *model.Article) error {
 	return db.DB.Create(article).Error

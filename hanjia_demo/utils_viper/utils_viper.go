@@ -18,7 +18,7 @@ var (
 type AppConfig struct {
 	App   AppConfigItem `mapstructure:"app"`
 	Mysql MysqlConfig   `mapstructure:"mysql"`
-	Redis RedisConfig   `mapstructure:"redis"`
+	Redis RedisConfig   `mapstructure:"redis2"`
 	JWT   JWTConfig     `mapstructure:"jwt"`
 	Log   LogConfig     `mapstructure:"log"`
 }

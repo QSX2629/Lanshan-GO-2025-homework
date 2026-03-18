@@ -29,17 +29,17 @@ func generateLockValue() string {
 // lockLuaScript: 获取分布式锁的Lua脚本（实现SET NX EX的原子操作）
 const lockLuaScript = `
 SET NX PX是仅当key不存在时设置值，同时设置过期时间
-return redis.call('SET', KEYS[1], ARGV[1], 'NX', 'PX', ARGV[2])
+return redis2.call('SET', KEYS[1], ARGV[1], 'NX', 'PX', ARGV[2])
 `
 
 // unlockLuaScript: 解锁的Lua脚本（实现“检查值-删除key”的原子操作）
 const unlockLuaScript = `
 验证锁的持有者是否是当前客户端
-if redis.call('GET', KEYS[1]) ~= ARGV[1] then
+if redis2.call('GET', KEYS[1]) ~= ARGV[1] then
     return 0
 end
 删除锁
-return redis.call('DEL', KEYS[1])
+return redis2.call('DEL', KEYS[1])
 `
 
 // 预编译Lua脚本，提升执行效率
@@ -111,15 +111,15 @@ local interval = tonumber(ARGV[4])
 local lockExpireMs = tonumber(ARGV[5])
 
  1. 获取限流锁（SET NX PX）
-local lockOk = redis.call('SET', lockKey, '1', 'NX', 'PX', lockExpireMs)
+local lockOk = redis2.call('SET', lockKey, '1', 'NX', 'PX', lockExpireMs)
 if not lockOk then
     未获取到锁，返回{false, 0}
     return {0, 0}
 end
 
  2. 获取令牌桶的last_time和tokens
-local lastTime = tonumber(redis.call('HGET', limitKey, 'last_time')) or now
-local tokens = tonumber(redis.call('HGET', limitKey, 'tokens')) or capacity
+local lastTime = tonumber(redis2.call('HGET', limitKey, 'last_time')) or now
+local tokens = tonumber(redis2.call('HGET', limitKey, 'tokens')) or capacity
 
  3. 计算生成的令牌数
 local generateTokens = math.floor((now - lastTime) / interval)
@@ -136,11 +136,11 @@ if tokens > 0 then
 end
 
  5. 更新令牌桶数据，并设置过期时间
-redis.call('HSET', limitKey, 'last_time', lastTime, 'tokens', tokens)
-redis.call('EXPIRE', limitKey, 60) -- 60秒过期
+redis2.call('HSET', limitKey, 'last_time', lastTime, 'tokens', tokens)
+redis2.call('EXPIRE', limitKey, 60) -- 60秒过期
 
  6. 释放限流锁
-redis.call('DEL', lockKey)
+redis2.call('DEL', lockKey)
 
  返回结果：{是否允许(1/0), 剩余令牌数}
 return {allow, tokens}

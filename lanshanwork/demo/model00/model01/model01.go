@@ -6,7 +6,7 @@ import (
 
 type Article struct {
 	gorm.Model
-	Title   string `json:"title"gorm:"unique;not null"`
+	Title   string `json:"title"gorm2:"unique;not null"`
 	Body    string `json:"body"`
 	Account string `json:"account"` //对应相应的发布账户
 }
