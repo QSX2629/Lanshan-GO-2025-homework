@@ -2,7 +2,7 @@ package gorm2
 
 import (
 	"context"
-	"lanshan11/user/model"
+	"lanshan11/internal/server/model"
 	"log"
 	"os"
 	"time"
