@@ -1,0 +1,58 @@
+syntax = "v1"
+
+type (
+	RegisterReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	RegisterResp {
+		Code int64  `json:"code"`
+		Msg  string `json:"msg"`
+	}
+	LoginReq {
+		Username string `json:"username"`
+		Password string `json:"password"`
+	}
+	LoginResp {
+		Code          int64  `json:"code"`
+		Msg           string `json:"msg"`
+		AccessToken   string `json:"access_token"`
+		RefreshToken  string `json:"refresh_token"`
+		AccessExpire  int64  `json:"access_expire"`
+		RefreshExpire int64  `json:"refresh_expire"`
+	}
+	RefreshTokenReq {
+		RefreshToken string `json:"refresh_token"`
+	}
+	RefreshTokenResp {
+		Code         int64  `json:"code"`
+		Msg          string `json:"msg"`
+		AccessToken  string `json:"access_token"`
+		AccessExpire int64  `json:"access_expire"`
+	}
+	UserInfoReq  {}
+	UserInfoResp {
+		Code     int64  `json:"code"`
+		Msg      string `json:"msg"`
+		UserId   uint64 `json:"user_id"`
+		Username string `json:"username"`
+	}
+)
+
+@server (
+	jwt: JwtAuth
+)
+service user {
+	@handler Register
+	post /user/register (RegisterReq) returns (RegisterResp)
+
+	@handler Login
+	post /user/login (LoginReq) returns (LoginResp)
+
+	@handler RefreshToken
+	post /user/refresh (RefreshTokenReq) returns (RefreshTokenResp)
+
+	@handler UserInfo
+	get /user/info (UserInfoReq) returns (UserInfoResp)
+}
+
