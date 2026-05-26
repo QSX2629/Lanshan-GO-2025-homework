@@ -1,0 +1,29 @@
+#服务
+server:
+  comet_port: 8080
+  logic_port: 8081
+  ai_port: 8082
+  api_port: 8083
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  username: root
+  password: Qsx20061212
+  database: aim
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: Qsx2006@
+  db: 0
+ai:
+  enable: true
+  model: doubao
+  api_key: ""
+log:
+  level: "info"
+  filename: "./logs/aim.log"
+  max_size: 100
+  max_backup: 10
+app:
+  env: "dev"
+  version: "v1.0.0"
