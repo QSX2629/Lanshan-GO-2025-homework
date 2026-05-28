@@ -1,0 +1,44 @@
+server:
+  gateway:
+    host: "0.0.0.0"
+    port: 8080
+    ws_path: "/ws"
+  user:
+    grpc_port: 50051
+  message:
+    grpc_port: 50052
+  relation:
+    grpc_port: 50053
+  ai:
+    grpc_port: 50054
+    http_port: 8081
+  file:
+    grpc_port: 50055
+    http_port: 8082
+
+database:
+  driver: "mysql"
+  dsn: "root:password@tcp(127.0.0.1:3306)/aim?charset=utf8mb4&parseTime=True&loc=Local"
+  max_open_conns: 100
+  max_idle_conns: 10
+
+redis:
+  addr: "127.0.0.1:6379"
+  password: ""
+  db: 0
+
+auth:
+  jwt_secret: "change-me-in-production"
+  token_expire: 7200  # seconds
+
+ai:
+  default_provider: "openai"
+  providers:
+    - name: "openai"
+      endpoint: "https://api.openai.com/v1"
+    - name: "anthropic"
+      endpoint: "https://api.anthropic.com/v1"
+  max_context_tokens: 8192
+  summary_prompt: "请总结以下对话内容的要点："
+  todo_extract_prompt: "请从以下对话中提取待办事项："
+  reply_candidate_prompt: "基于对话上下文，生成3个候选回复："
