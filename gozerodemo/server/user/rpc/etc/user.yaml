@@ -1,0 +1,12 @@
+Name: user.rpc
+ListenOn: 0.0.0.0:8081
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: user.rpc
+
+Jwt:
+  AccessSecret: "go-zero-access-2026"
+  RefreshSecret: "go-zero-refresh-2026"
+  AccessExpire: 3600
+  RefreshExpire: 604800
